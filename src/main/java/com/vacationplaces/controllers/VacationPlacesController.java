@@ -53,6 +53,7 @@ public class VacationPlacesController {
         return list;
     }
 
+    /*
     //@PostMapping(value = "saveNewComments", consumes = M)
     @RequestMapping(
             consumes = { "multipart/form-data" },
@@ -76,15 +77,26 @@ public class VacationPlacesController {
         return result;
     }
 
-    @RequestMapping(value = "/formulario", method = RequestMethod.POST)
+     */
+
+    @RequestMapping(value = "/saveNewComments", method = RequestMethod.POST)
     @ResponseBody
     public boolean formulario(
-            @RequestPart("valor1") String valor1,
+            @RequestParam("name") String name,
+            @RequestParam("comment") String comment,
+            @RequestParam("idPlaces") String idplaces,
             @RequestParam("photo") MultipartFile file) {
 
-        System.out.println(valor1);
+        SaveNewCommentsRequest saveNewCommentsRequest = new SaveNewCommentsRequest();
 
-        vacatioPlacesServices.saveNewFile(file, 1);
-        return false;
+        saveNewCommentsRequest.setComment(comment);
+        saveNewCommentsRequest.setIdPlaces(Integer.parseInt(idplaces));
+        saveNewCommentsRequest.setName(name);
+        saveNewCommentsRequest.setPhoto(file);
+
+        boolean result = vacatioPlacesServices.saveNewComments(saveNewCommentsRequest);
+
+        //vacatioPlacesServices.saveNewFile(file, 1);
+        return result;
     }
 }

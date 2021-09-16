@@ -67,23 +67,29 @@ public class VacatioPlacesServices {
 
     public boolean saveNewComments(SaveNewCommentsRequest saveNewCommentsRequest) {
 
-        Comments comments = new Comments();
-        comments.setComment(saveNewCommentsRequest.getComment());
+        try {
+
+            Comments comments = new Comments();
+            comments.setComment(saveNewCommentsRequest.getComment());
 
 
-        Places places = entityManager.getReference(Places.class, saveNewCommentsRequest.getIdPlaces());
-        comments.setPlaces(places);
-        comments.setName(saveNewCommentsRequest.getName());
-        comments.setPhoto(
-                this.saveNewFile(saveNewCommentsRequest.getPhoto(),
-                        saveNewCommentsRequest.getIdPlaces()
-                ));
+            Places places = entityManager.getReference(Places.class, saveNewCommentsRequest.getIdPlaces());
+            comments.setPlaces(places);
+            comments.setName(saveNewCommentsRequest.getName());
+            comments.setPhoto(
+                    this.saveNewFile(saveNewCommentsRequest.getPhoto(),
+                            saveNewCommentsRequest.getIdPlaces()
+                    ));
 
-        entityManager.persist(comments);
+            entityManager.persist(comments);
 
-        System.out.print(comments.getId());
+            System.out.print(comments.getId());
 
-        return false;
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 
     public String saveNewFile(MultipartFile file, Integer idPlaces) {
@@ -91,7 +97,7 @@ public class VacatioPlacesServices {
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
 
-         String path = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps\\files\\photos\\";
+        String path = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps\\files\\photos\\";
         //String path = "/var/www/html/files/photos/";
 
         String fileName = "IDP-" + idPlaces + "-" + randomUUIDString + "-" + file.getOriginalFilename();
