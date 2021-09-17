@@ -72,14 +72,15 @@ public class VacatioPlacesServices {
             Comments comments = new Comments();
             comments.setComment(saveNewCommentsRequest.getComment());
 
-
             Places places = entityManager.getReference(Places.class, saveNewCommentsRequest.getIdPlaces());
             comments.setPlaces(places);
             comments.setName(saveNewCommentsRequest.getName());
+
             comments.setPhoto(
-                    this.saveNewFile(saveNewCommentsRequest.getPhoto(),
-                            saveNewCommentsRequest.getIdPlaces()
-                    ));
+                    saveNewCommentsRequest.getPhoto() != null ?
+                            this.saveNewFile(saveNewCommentsRequest.getPhoto(),
+                                    saveNewCommentsRequest.getIdPlaces()
+                            ) : "");
 
             entityManager.persist(comments);
 
@@ -97,14 +98,14 @@ public class VacatioPlacesServices {
         UUID uuid = UUID.randomUUID();
         String randomUUIDString = uuid.toString();
 
-        String path = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps\\files\\photos\\";
+
+        String pathSever = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps";
+        String pathDomain = "\\files\\photos\\";
         //String path = "/var/www/html/files/photos/";
 
         String fileName = "IDP-" + idPlaces + "-" + randomUUIDString + "-" + file.getOriginalFilename();
 
-        String fileFinalPath = path + fileName;
-
-
+        String fileFinalPath = pathSever + pathDomain + fileName;
         System.out.println(fileFinalPath);
 
         Path filepath = Paths.get(fileFinalPath);
@@ -116,6 +117,6 @@ public class VacatioPlacesServices {
             e.printStackTrace();
         }
 
-        return fileFinalPath;
+        return pathDomain + fileName;
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class VacationPlacesController {
@@ -85,14 +86,14 @@ public class VacationPlacesController {
             @RequestParam("name") String name,
             @RequestParam("comment") String comment,
             @RequestParam("idPlaces") String idplaces,
-            @RequestParam("photo") MultipartFile file) {
+            @RequestParam("photo") Optional <MultipartFile> file) {
 
         SaveNewCommentsRequest saveNewCommentsRequest = new SaveNewCommentsRequest();
 
         saveNewCommentsRequest.setComment(comment);
         saveNewCommentsRequest.setIdPlaces(Integer.parseInt(idplaces));
         saveNewCommentsRequest.setName(name);
-        saveNewCommentsRequest.setPhoto(file);
+        saveNewCommentsRequest.setPhoto(file.isPresent() ? file.get(): null);
 
         boolean result = vacatioPlacesServices.saveNewComments(saveNewCommentsRequest);
 
