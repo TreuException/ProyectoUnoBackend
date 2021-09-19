@@ -90,7 +90,12 @@ public class VacationPlacesController {
 
         SaveNewCommentsRequest saveNewCommentsRequest = new SaveNewCommentsRequest();
 
-        saveNewCommentsRequest.setComment(comment);
+        String characterFilter = "[^\\p{L}\\p{M}\\p{N}\\p{P}\\p{Z}\\p{Cf}\\p{Cs}\\s]";
+        String emotionless = comment.replaceAll(characterFilter,"");
+
+        //saveNewCommentsRequest.setComment(comment);
+        saveNewCommentsRequest.setComment(emotionless);
+
         saveNewCommentsRequest.setIdPlaces(Integer.parseInt(idplaces));
         saveNewCommentsRequest.setName(name);
         saveNewCommentsRequest.setPhoto(file.isPresent() ? file.get(): null);
