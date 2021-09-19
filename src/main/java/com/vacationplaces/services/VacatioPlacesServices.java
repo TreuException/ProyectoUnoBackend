@@ -99,9 +99,11 @@ public class VacatioPlacesServices {
         String randomUUIDString = uuid.toString();
 
 
-        String pathSever = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps";
-        String pathDomain = "\\files\\photos\\";
-        //String path = "/var/www/html/files/photos/";
+        //String pathSever = "C:\\servidor_web\\apache-tomcat-8.5.70\\webapps"
+        //String pathDomain = "\\files\\photos\\";
+
+        String pathSever = "/var/www/html/";
+        String pathDomain = "/files/photos/";
 
         String fileName = "IDP-" + idPlaces + "-" + randomUUIDString + "-" + file.getOriginalFilename();
 
